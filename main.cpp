@@ -1,6 +1,9 @@
 #include <QAudioInput>
 #include <QFile>
 #include <QCoreApplication>
+#include<QAudioFormat>
+#include<QAudioDevice>
+
 #include<string>
 
 int main(int argc, char *argv[])
@@ -12,6 +15,7 @@ int main(int argc, char *argv[])
     //     qWarning() << "Could not open output file";
     //     return 1;
     // }
+
 
     QAudioFormat format;
     format.setSampleRate(44100);
