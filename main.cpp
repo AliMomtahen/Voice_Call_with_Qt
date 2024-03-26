@@ -1,40 +1,22 @@
 #include <QAudioInput>
 #include <QFile>
 #include <QCoreApplication>
+#include <QApplication>
 #include<QAudioFormat>
 #include<QAudioDevice>
+#include<QMediaDevices>
 
 #include<string>
+#include"Audio.h"
 
-int main(int argc, char *argv[])
+int main(int argv, char **args)
 {
-    QCoreApplication app(argc, argv);
+    QApplication app(argv, args);
+    QCoreApplication::setApplicationName("Audio Source Test");
 
-    QFile outputFile("output.wav");
-    // if (!outputFile.open(QIODevice::WriteOnly QIODevice::Truncate)) {
-    //     qWarning() << "Could not open output file";
-    //     return 1;
-    // }
+    InputTest input;
+    input.show();
 
-
-    QAudioFormat format;
-    format.setSampleRate(44100);
-    format.setChannelCount(2);
-    format.setSampleSize(16);
-    format.setCodec("audio/pcm");
-    format.setByteOrder(QAudioFormat::LittleEndian);
-    format.setSampleType(QAudioFormat::SignedInt);
-
-    QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
-    if (!info.isFormatSupported(format)) {
-        qWarning() << "Default format not supported, try to use nearest";
-        format = info.nearestFormat(format);
-    }
-
-    QAudioInput audioInput(info, format);
-    audioInput.start(&outputFile);
-
-    qDebug() << "Recording audio... Press Ctrl+C to stop.";
-    return app.exec();
+    return QCoreApplication::exec();
 }
 
