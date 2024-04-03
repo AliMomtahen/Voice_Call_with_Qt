@@ -12,7 +12,7 @@
 
 #include <QByteArray>
 #include <QScopedPointer>
-
+#include<iostream>
 class AudioInfo : public QIODevice
 {
     Q_OBJECT
@@ -71,6 +71,7 @@ private slots:
     void toggleMode();
     void toggleSuspend();
     void deviceChanged(int index);
+    void deviceOutputChanged(int index);
     void sliderChanged(int value);
 
 private:
@@ -79,6 +80,7 @@ private:
     QPushButton *m_modeButton = nullptr;
     QPushButton *m_suspendResumeButton = nullptr;
     QComboBox *m_deviceBox = nullptr;
+    QComboBox *m_deviceBox2 = nullptr;
     QSlider *m_volumeSlider = nullptr;
 
     QMediaDevices *m_devices = nullptr;

@@ -18,7 +18,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-
+int debug_number = 0;
 AudioInfo::AudioInfo(const QAudioFormat &format) : m_format(format) { }
 
 void AudioInfo::start()
@@ -92,6 +92,7 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
 void RenderArea::setLevel(qreal value)
 {
     m_level = value;
+    //std::cout << debug_number++ << std::endl;
     update();
 }
 
@@ -117,6 +118,17 @@ void InputTest::initializeWindow()
 
     connect(m_deviceBox, &QComboBox::activated, this, &InputTest::deviceChanged);
     layout->addWidget(m_deviceBox);
+
+    m_deviceBox2 = new QComboBox(this);
+    const QAudioDevice &defaultDeviceInfo2 = m_devices->defaultAudioOutput();
+    m_deviceBox2->addItem(defaultDeviceInfo2.description(), QVariant::fromValue(defaultDeviceInfo2));
+    for (auto &deviceInfo : m_devices->audioOutputs()) {
+        if (deviceInfo != defaultDeviceInfo2)
+            m_deviceBox2->addItem(deviceInfo.description(), QVariant::fromValue(deviceInfo));
+    }
+    connect(m_deviceBox2, QOverload<int>::of(&QComboBox::activated), this,
+            &InputTest::deviceOutputChanged);
+    layout->addWidget(m_deviceBox2);
 
     m_volumeSlider = new QSlider(Qt::Horizontal, this);
     m_volumeSlider->setRange(0, 100);
@@ -179,6 +191,7 @@ void InputTest::init()
     initializeWindow();
     initializeAudio(QMediaDevices::defaultAudioInput());
 }
+int h=0;
 
 void InputTest::toggleMode()
 {
@@ -188,6 +201,7 @@ void InputTest::toggleMode()
     // Change between pull and push modes
     if (m_pullMode) {
         m_modeButton->setText(tr("Enable push mode"));
+        std::cout << "AAAAA" << std::endl;
         m_audioInput->start(m_audioInfo.data());
     } else {
         m_modeButton->setText(tr("Enable pull mode"));
@@ -203,6 +217,7 @@ void InputTest::toggleMode()
             qint64 l = io->read(buffer.data(), len);
             if (l > 0) {
                 const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
+                //std::cout << "yes " << level << std::endl;
                 m_canvas->setLevel(level);
             }
         });
@@ -237,6 +252,15 @@ void InputTest::deviceChanged(int index)
     m_audioInput->disconnect(this);
 
     initializeAudio(m_deviceBox->itemData(index).value<QAudioDevice>());
+}
+
+void InputTest::deviceOutputChanged(int index)
+{
+
+    std::cout << "yes" << std::endl;
+    // m_audioOutput->stop();
+    // m_audioOutput->disconnect(this);
+    // initializeAudio(m_deviceBox->itemData(index).value<QAudioDevice>());
 }
 
 void InputTest::sliderChanged(int value)
