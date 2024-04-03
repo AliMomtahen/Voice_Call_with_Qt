@@ -13,6 +13,9 @@
 #include <QByteArray>
 #include <QScopedPointer>
 #include<iostream>
+
+#include"AudioOut.h"
+
 class AudioInfo : public QIODevice
 {
     Q_OBJECT
@@ -83,6 +86,7 @@ private:
     QComboBox *m_deviceBox2 = nullptr;
     QSlider *m_volumeSlider = nullptr;
 
+    AudioOut *m_audioOutput;
     QMediaDevices *m_devices = nullptr;
     QScopedPointer<AudioInfo> m_audioInfo;
     QScopedPointer<QAudioSource> m_audioInput;

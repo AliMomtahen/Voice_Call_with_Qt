@@ -152,6 +152,7 @@ void InputTest::initializeAudio(const QAudioDevice &deviceInfo)
     format.setChannelCount(1);
     format.setSampleFormat(QAudioFormat::Int16);
 
+    m_audioOutput = new AudioOut();
     m_audioInfo.reset(new AudioInfo(format));
     connect(m_audioInfo.data(), &AudioInfo::levelChanged, m_canvas, &RenderArea::setLevel);
 
@@ -217,6 +218,7 @@ void InputTest::toggleMode()
             qint64 l = io->read(buffer.data(), len);
             if (l > 0) {
                 const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
+                //m_audioOutput->play(buffer);
                 //std::cout << "yes " << level << std::endl;
                 m_canvas->setLevel(level);
             }

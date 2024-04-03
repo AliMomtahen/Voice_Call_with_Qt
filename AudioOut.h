@@ -16,6 +16,7 @@
 
 
 
+
 class AudioOut : public QObject{
     Q_OBJECT
 public:
@@ -35,6 +36,7 @@ private:
 
     QIODevice* io;
     QAudioFormat m_format;
+
 QScopedPointer<QAudioSink> m_audioOutput;
 QMediaDevices *m_devices = nullptr;
 };
