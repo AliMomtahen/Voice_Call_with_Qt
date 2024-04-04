@@ -27,6 +27,8 @@ public:
     void set_level(int);
     void change_device(int);
     void play(QByteArray &buffer);
+    void start();
+    void stop();
 
 signals:
 

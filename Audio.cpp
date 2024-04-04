@@ -143,6 +143,10 @@ void InputTest::initializeWindow()
     m_suspendResumeButton = new QPushButton(this);
     connect(m_suspendResumeButton, &QPushButton::clicked, this, &InputTest::toggleSuspend);
     layout->addWidget(m_suspendResumeButton);
+
+    m_muteSpeakerButton = new QPushButton(this);
+    connect(m_muteSpeakerButton, &QPushButton::clicked, this, &InputTest::toggleSpeaker);
+    layout->addWidget(m_muteSpeakerButton);
 }
 
 void InputTest::initializeAudio(const QAudioDevice &deviceInfo)
@@ -162,6 +166,7 @@ void InputTest::initializeAudio(const QAudioDevice &deviceInfo)
     m_volumeSlider->setValue(qRound(initialVolume * 100));
     m_audioInfo->start();
     toggleMode();
+    toggleSpeaker();
 }
 
 void InputTest::initializeErrorWindow()
@@ -218,7 +223,7 @@ void InputTest::toggleMode()
             qint64 l = io->read(buffer.data(), len);
             if (l > 0) {
                 const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
-                //m_audioOutput->play(buffer);
+                m_audioOutput->play(buffer);
                 //std::cout << "yes " << level << std::endl;
                 m_canvas->setLevel(level);
             }
@@ -245,6 +250,21 @@ void InputTest::toggleSuspend()
         // no-op
         break;
     }
+}
+
+void InputTest::toggleSpeaker()
+{
+    std::cout << "tog spleak" << std::endl;
+    if(is_mutespeaker){
+        m_audioOutput->start();
+        m_muteSpeakerButton->setText(tr("mute Speaker"));
+    }
+    else{
+        m_audioOutput->stop();
+        m_muteSpeakerButton->setText(tr("unmute Speaker"));
+    }
+
+    is_mutespeaker = !is_mutespeaker;
 }
 
 void InputTest::deviceChanged(int index)

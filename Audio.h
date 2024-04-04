@@ -76,12 +76,14 @@ private slots:
     void deviceChanged(int index);
     void deviceOutputChanged(int index);
     void sliderChanged(int value);
+    void toggleSpeaker();
 
 private:
     // Owned by layout
     RenderArea *m_canvas = nullptr;
     QPushButton *m_modeButton = nullptr;
     QPushButton *m_suspendResumeButton = nullptr;
+    QPushButton *m_muteSpeakerButton = nullptr;
     QComboBox *m_deviceBox = nullptr;
     QComboBox *m_deviceBox2 = nullptr;
     QSlider *m_volumeSlider = nullptr;
@@ -91,6 +93,7 @@ private:
     QScopedPointer<AudioInfo> m_audioInfo;
     QScopedPointer<QAudioSource> m_audioInput;
     bool m_pullMode = true;
+    bool is_mutespeaker = true;
 };
 
 

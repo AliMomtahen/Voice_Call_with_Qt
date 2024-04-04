@@ -19,8 +19,8 @@ AudioOut::AudioOut() {
     m_audioOutput.reset( new QAudioSink{m_devices->defaultAudioOutput(),
                                        m_format,nullptr});
 
-
-    io = m_audioOutput->start();
+    mute = 0;
+    //io = m_audioOutput->start();
     // if(!io->open(QIODevice::WriteOnly))
     // {
     //     qDebug() << "Couldn't open AudioSink!";
@@ -30,6 +30,19 @@ AudioOut::AudioOut() {
     //             audioSinkData(io);
     //         });
 
+}
+
+void AudioOut::start(){
+    mute = false;
+    m_audioOutput.reset( new QAudioSink{m_devices->defaultAudioOutput(),
+                                       m_format,nullptr});
+    io = m_audioOutput->start();
+}
+
+
+void AudioOut::stop(){
+    mute = true;
+    m_audioOutput->stop();
 }
 
 void AudioOut::change_device(int index)
@@ -48,7 +61,8 @@ void AudioOut::initAudio(QAudioDevice &a_device){
 
 
 void AudioOut::play(QByteArray &buffer){
+
     int len = buffer.size();
-    if(len)
+    if(len && (!mute))
         io->write(buffer.constData() , len);
 }
