@@ -33,12 +33,14 @@
 برای پیاده سازی ارتباط با webrtc از کتاب خانه libdatachannel استفاده میکنیم که قبلا بیلد شده است .
 ابتدا یک oferrer  و یک answerrer داریم که همان کلاینت های ما هستند .
 ابتدا oferrer اطلاعات sdp  کانفیگ را به signaling server ارسال میکند . 
-سپس منتظر پاسخ answerer از سرور میماند تا کانفیگ و sdp و  candidate ها را دریافت کند. 
+سپس منتظر پاسخ answerer از سرور میماند تا کانفیگ و sdp و candidate ها را دریافت کند. 
+نهایتا با برقراری ارتباط ، سرور کنار میرود و دو کلاینت با هم ارتباط برقرار میکنند . بخش های مهم این کد عبارتند از : بخش دریافت و اضافه کردن description , candidate ها
+![desAndcand](https://github.com/AliMomtahen/CN_CA1/assets/102304346/337185c6-261c-443b-99f9-cc04fa3ea016)
+بخش مربوط به افزودن callback ها :
+![callbacks](https://github.com/AliMomtahen/CN_CA1/assets/102304346/820066bd-82d9-493a-9fce-a92ac1bed2b1)
+![server](https://github.com/AliMomtahen/CN_CA1/assets/102304346/cc5317c5-da85-41ba-8ab3-cff94a91247f)
+![clientRecieve](https://github.com/AliMomtahen/CN_CA1/assets/102304346/a7bab9d5-7072-40c3-b4a1-47e5e320934a)
+نمونه اجرای اتصال دو کلاینت  و ارسال پیام:
+![test](https://github.com/AliMomtahen/CN_CA1/assets/102304346/7b6afda1-291b-42df-b0a6-cca0787aae87)
 
-
-
-
-
-
-
-
+بخش دریافت صدا از میکروفون و پخش 
