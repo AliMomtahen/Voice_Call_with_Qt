@@ -97,7 +97,7 @@ private:
     QSlider *m_volumeSlider = nullptr;
     QPushButton *m_modeCallButton1 = nullptr;
     QPushButton *m_modeCallButton2 = nullptr;
-
+    QLineEdit *inputIp;
     WebRTCClientAnswerer *web1=nullptr;
     WebRTCClientOferrer *web2 = nullptr;
     AudioOut *m_audioOutput;

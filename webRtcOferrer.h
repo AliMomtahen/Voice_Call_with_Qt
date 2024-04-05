@@ -20,11 +20,19 @@ private:
     shared_ptr<rtc::DataChannel> dc;
     int role;
     std::string desc;
+    std::string ip;
     std::vector <std::string> cand;
     AudioOut *ao = nullptr;
 
 public:
     WebRTCClientOferrer();
+    WebRTCClientOferrer(std::string _ip){
+        std::cout << "oferrer   ----   client\n ";
+        rtc::InitLogger(rtc::LogLevel::Warning);
+        ip = _ip;
+        initializePeerConnection();
+        role = 1;
+    }
     void start();
     void close();
     void sendMessage(const char *);

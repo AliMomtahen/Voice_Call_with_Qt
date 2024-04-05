@@ -24,9 +24,19 @@ private:
     std::string desc;
     std::vector <std::string> cand;
     AudioOut *ao=nullptr;
+    std::string ip;
 
 public:
     WebRTCClientAnswerer();
+    WebRTCClientAnswerer(std::string _ip){
+        std::cout << "answerer ----- server\n";
+        rtc::InitLogger(rtc::LogLevel::Warning);
+        initializePeerConnection();
+        TCPserver.setPort(12345);
+        TCPserver.Start();
+        role = 2;
+        ip = _ip;
+    }
     void start();
     void close();
     void sendMessage(const char *);

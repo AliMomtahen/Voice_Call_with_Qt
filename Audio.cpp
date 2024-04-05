@@ -10,7 +10,7 @@
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QtEndian>
-
+#include <QLineEdit>
 #if QT_CONFIG(permissions)
 #include <QCoreApplication>
 #include <QPermission>
@@ -116,6 +116,9 @@ void InputTest::initializeWindow()
     m_modeCallButton2->setText("wait for call");
     m_canvas = new RenderArea(this);
     layout->addWidget(m_canvas);
+    inputIp = new QLineEdit;
+    inputIp->setPlaceholderText("ip");
+    layout->addWidget(inputIp);
 
     m_deviceBox = new QComboBox(this);
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioInput();
@@ -311,8 +314,9 @@ void InputTest::sliderChanged(int value)
 
 void InputTest::chooseCallMode1(){
     if(call_mode == 0){
+        auto p = inputIp->text().toStdString();
         call_mode = 1;
-        web1 = new WebRTCClientAnswerer();
+        web1 = new WebRTCClientAnswerer(p);
         web1->setAudioOut(m_audioOutput);
         web1->start();
     }
@@ -321,8 +325,9 @@ void InputTest::chooseCallMode1(){
 void InputTest::chooseCallMode2(){
     if(call_mode == 0){
         std::cout << "set wait call" << std::endl;
+        auto p = inputIp->text().toStdString();
         call_mode = 2;
-        web2 = new WebRTCClientOferrer();
+        web2 = new WebRTCClientOferrer(p);
         web2->setAudioOut(m_audioOutput);
         web2->start();
     }
