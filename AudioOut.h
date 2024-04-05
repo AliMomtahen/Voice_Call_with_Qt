@@ -39,8 +39,8 @@ private:
     QIODevice* io;
     QAudioFormat m_format;
 
-QScopedPointer<QAudioSink> m_audioOutput;
-QMediaDevices *m_devices = nullptr;
+    QScopedPointer<QAudioSink> m_audioOutput;
+    QMediaDevices *m_devices = nullptr;
 };
 
 #endif // AUDIOOUT_H
