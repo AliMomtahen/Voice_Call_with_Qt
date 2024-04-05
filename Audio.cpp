@@ -215,11 +215,11 @@ void InputTest::toggleMode()
 
     // Change between pull and push modes
     if (m_pullMode) {
-        m_modeButton->setText(tr("Enable push mode"));
+        m_modeButton->setText(tr("unmute mic"));
         std::cout << "AAAAA" << std::endl;
         m_audioInput->start(m_audioInfo.data());
     } else {
-        m_modeButton->setText(tr("Enable pull mode"));
+        m_modeButton->setText(tr("mut mic"));
         auto *io = m_audioInput->start();
         if (!io)
             return;
@@ -234,9 +234,11 @@ void InputTest::toggleMode()
                 const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
                 //m_audioOutput->play(buffer);
                 if(call_mode == 1 && web1){
-                    std::cout << "ya ali"<<std::endl;
-                    std::string g = "hellow";
-                    web1->sendMessage(g.c_str());
+                    //std::cout << "ya ali"<<std::endl;
+                    //std::string g = "hellow";
+                    web1->sendMessage(buffer.data());
+                }else if(call_mode == 2 && web2){
+                    web2->sendMessage(buffer.data());
                 }
                 //std::cout << "yes " << level << std::endl;
                 m_canvas->setLevel(level);
