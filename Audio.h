@@ -15,6 +15,8 @@
 #include<iostream>
 
 #include"AudioOut.h"
+#include"WebRTCAnswerer.h"
+#include"webRtcOferrer.h"
 
 class AudioInfo : public QIODevice
 {
@@ -63,6 +65,9 @@ class InputTest : public QWidget
 
 public:
     InputTest();
+    ~InputTest(){if(web1)web1->close();
+        if(web2)web2->close();
+    }
 
 private:
     void initializeWindow();
@@ -77,6 +82,9 @@ private slots:
     void deviceOutputChanged(int index);
     void sliderChanged(int value);
     void toggleSpeaker();
+    void chooseCallMode1();
+    void chooseCallMode2();
+
 
 private:
     // Owned by layout
@@ -87,13 +95,18 @@ private:
     QComboBox *m_deviceBox = nullptr;
     QComboBox *m_deviceBox2 = nullptr;
     QSlider *m_volumeSlider = nullptr;
+    QPushButton *m_modeCallButton1 = nullptr;
+    QPushButton *m_modeCallButton2 = nullptr;
 
+    WebRTCClientAnswerer *web1=nullptr;
+    WebRTCClientOferrer *web2 = nullptr;
     AudioOut *m_audioOutput;
     QMediaDevices *m_devices = nullptr;
     QScopedPointer<AudioInfo> m_audioInfo;
     QScopedPointer<QAudioSource> m_audioInput;
     bool m_pullMode = true;
     bool is_mutespeaker = true;
+    int call_mode = 0;
 };
 
 

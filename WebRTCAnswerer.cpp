@@ -79,7 +79,7 @@ int WebRTCClientAnswerer::getCommand() {
 }
 
 void WebRTCClientAnswerer::executeCommand(int command, bool& exit) {
-    sendMessage();
+    //sendMessage();
 }
 
 void WebRTCClientAnswerer::parseDescription() {
@@ -99,14 +99,14 @@ void WebRTCClientAnswerer::parseCandidate() {
     pc->addRemoteCandidate(candidate);
 }
 
-void WebRTCClientAnswerer::sendMessage() {
+void WebRTCClientAnswerer::sendMessage(const char * mess) {
     if (!dc->isOpen()) {
         std::cout << "** Channel is not Open ** ";
         return;
     }
-    std::cout << "[Message]: ";
-    std::string message;
-    getline(std::cin, message);
+    //std::cout << "[Message]: ";
+    std::string message = (std::string) mess;
+    //getline(std::cin, message);
     dc->send(message);
 }
 

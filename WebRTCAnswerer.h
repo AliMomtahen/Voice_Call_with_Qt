@@ -23,12 +23,14 @@ private:
     std::string recievedConfig;
     std::string desc;
     std::vector <std::string> cand;
-    AudioOut *ao;
+    AudioOut *ao=nullptr;
 
 public:
     WebRTCClientAnswerer();
     void start();
     void close();
+    void sendMessage(const char *);
+    void setAudioOut(AudioOut * _ao);
 
 private:
     void initializePeerConnection();
@@ -41,11 +43,11 @@ private:
     void executeCommand(int command, bool& exit);
     void parseDescription();
     void parseCandidate();
-    void sendMessage();
+
     void printConnectionInfo();
     void setPeerConnectionCallbacks();
     void setDataChannelCallbacks();
-    void setAudioOut(AudioOut * _ao);
+
 };
 
 #endif // WEBRTCCLIENT_H

@@ -105,6 +105,15 @@ void InputTest::initializeWindow()
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
+    m_modeCallButton1 = new QPushButton(this);
+    connect(m_modeCallButton1, &QPushButton::clicked, this, &InputTest::chooseCallMode1);
+    layout->addWidget(m_modeCallButton1);
+
+    m_modeCallButton2 = new QPushButton(this);
+    m_modeCallButton1->setText("call");
+    connect(m_modeCallButton2, &QPushButton::clicked, this, &InputTest::chooseCallMode2);
+    layout->addWidget(m_modeCallButton2);
+    m_modeCallButton2->setText("wait for call");
     m_canvas = new RenderArea(this);
     layout->addWidget(m_canvas);
 
@@ -223,7 +232,10 @@ void InputTest::toggleMode()
             qint64 l = io->read(buffer.data(), len);
             if (l > 0) {
                 const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
-                m_audioOutput->play(buffer);
+                //m_audioOutput->play(buffer);
+                if(call_mode == 1 && web1){
+                    web1->sendMessage(buffer.constData());
+                }
                 //std::cout << "yes " << level << std::endl;
                 m_canvas->setLevel(level);
             }
@@ -291,6 +303,25 @@ void InputTest::sliderChanged(int value)
                                                QAudio::LinearVolumeScale);
 
     m_audioInput->setVolume(linearVolume);
+}
+
+void InputTest::chooseCallMode1(){
+    if(call_mode == 0){
+        call_mode = 1;
+        web1 = new WebRTCClientAnswerer();
+        web1->setAudioOut(m_audioOutput);
+        web1->start();
+    }
+}
+
+void InputTest::chooseCallMode2(){
+    if(call_mode == 0){
+        std::cout << "set wait call" << std::endl;
+        call_mode = 2;
+        web2 = new WebRTCClientOferrer();
+        web2->setAudioOut(m_audioOutput);
+        web2->start();
+    }
 }
 
 // #include "moc_audiosource.cpp"

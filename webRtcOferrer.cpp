@@ -73,7 +73,7 @@ int WebRTCClientOferrer::getCommand() {
 }
 
 void WebRTCClientOferrer::executeCommand(int command, bool& exit) {
-    sendMessage();
+    //sendMessage();
 }
 
 void WebRTCClientOferrer::parseDescription(std::string descript) {
@@ -86,14 +86,14 @@ void WebRTCClientOferrer::parseCandidate(std::string candid) {
     pc->addRemoteCandidate(candid);
 }
 
-void WebRTCClientOferrer::sendMessage() {
+void WebRTCClientOferrer::sendMessage(const char * mess) {
     if (!dc->isOpen()) {
         std::cout << "** Channel is not Open ** ";
         return;
     }
-    std::cout << "[Message]: ";
-    std::string message;
-    getline(std::cin, message);
+    //std::cout << "[Message]: ";
+    std::string message = (std::string) mess;
+    //getline(std::cin, message);
     dc->send(message);
 }
 
@@ -148,7 +148,7 @@ void WebRTCClientOferrer::setDataChannelCallbacks() {
         std::cout << "[DataChannel closed: " << dc->label() << "]" << std::endl;
     });
 
-    dc->onMessage([](auto data) {
+    dc->onMessage([this](auto data) {
         if (std::holds_alternative<std::string>(data)) {
             std::cout << "[Received: " << std::get<std::string>(data) << "]" << std::endl;
             std::string d = std::get<std::string>(data);
@@ -156,13 +156,11 @@ void WebRTCClientOferrer::setDataChannelCallbacks() {
             if(ao){
                 QByteArray buffer(d.size() , 0);
                 buffer.setRawData(d.c_str() , d.size());
-
+                ao->play(buffer);
             }
         }
 
-        // if(ao){
 
-        // }
     });
 }
 
