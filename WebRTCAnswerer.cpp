@@ -1,5 +1,7 @@
 #include "WebRTCAnswerer.h"
 
+#include<QByteArray>
+#include<string>
 
 WebRTCClientAnswerer::WebRTCClientAnswerer() {
     std::cout << "answerer ----- server\n";
@@ -12,7 +14,7 @@ WebRTCClientAnswerer::WebRTCClientAnswerer() {
 
 void WebRTCClientAnswerer::start() {
     onDataChannel();
-    handleCommands();
+    //handleCommands();
 }
 
 void WebRTCClientAnswerer::close() {
@@ -162,9 +164,32 @@ void WebRTCClientAnswerer::setDataChannelCallbacks() {
         std::cout << "[DataChannel closed: " << dc->label() << "]" << std::endl;
     });
 
-    dc->onMessage([](auto data) {
+    dc->onMessage([this](auto data) {
         if (std::holds_alternative<std::string>(data)) {
             std::cout << "[Received: " << std::get<std::string>(data) << "]" << std::endl;
+
+            std::string d = std::get<std::string>(data);
+
+            if(ao){
+                QByteArray buffer(d.size() , 0);
+                buffer.setRawData(d.c_str() , d.size());
+
+            }
+        }
+
+
+        if(ao){
+            QByteArray buffer;
+            // buffer.setRawData()
+
         }
     });
+
+
+
+}
+
+
+void WebRTCClientAnswerer::setAudioOut(AudioOut *_ao){
+    ao = _ao;
 }

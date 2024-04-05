@@ -3,6 +3,7 @@
 
 #include "rtc/rtc.hpp"
 #include "TCPServer.h"
+#include"AudioOut.h"
 #include <chrono>
 #include <iostream>
 #include <memory>
@@ -22,6 +23,7 @@ private:
     std::string recievedConfig;
     std::string desc;
     std::vector <std::string> cand;
+    AudioOut *ao;
 
 public:
     WebRTCClientAnswerer();
@@ -43,6 +45,7 @@ private:
     void printConnectionInfo();
     void setPeerConnectionCallbacks();
     void setDataChannelCallbacks();
+    void setAudioOut(AudioOut * _ao);
 };
 
 #endif // WEBRTCCLIENT_H

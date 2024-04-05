@@ -7,6 +7,7 @@
 #include <memory>
 #include <thread>
 #include "TCPClient.h"
+#include"AudioOut.h"
 
 using namespace std::chrono_literals;
 using std::shared_ptr;
@@ -20,6 +21,7 @@ private:
     int role;
     std::string desc;
     std::vector <std::string> cand;
+    AudioOut *ao;
 
 public:
     WebRTCClientOferrer();
@@ -41,6 +43,7 @@ private:
     void printConnectionInfo();
     void setPeerConnectionCallbacks();
     void setDataChannelCallbacks();
+    void setAudioOut(AudioOut *_ao);
 };
 
 #endif // WEBRTCOFERRER_H

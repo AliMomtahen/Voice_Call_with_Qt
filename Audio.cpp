@@ -254,7 +254,7 @@ void InputTest::toggleSuspend()
 
 void InputTest::toggleSpeaker()
 {
-    std::cout << "tog spleak" << std::endl;
+    //std::cout << "tog spleak" << std::endl;
     if(is_mutespeaker){
         m_audioOutput->start();
         m_muteSpeakerButton->setText(tr("mute Speaker"));
@@ -279,7 +279,7 @@ void InputTest::deviceChanged(int index)
 void InputTest::deviceOutputChanged(int index)
 {
 
-    std::cout << "yes" << std::endl;
+    //std::cout << "yes" << std::endl;
     // m_audioOutput->stop();
     // m_audioOutput->disconnect(this);
     // initializeAudio(m_deviceBox->itemData(index).value<QAudioDevice>());

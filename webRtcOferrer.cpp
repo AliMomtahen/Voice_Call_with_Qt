@@ -151,6 +151,22 @@ void WebRTCClientOferrer::setDataChannelCallbacks() {
     dc->onMessage([](auto data) {
         if (std::holds_alternative<std::string>(data)) {
             std::cout << "[Received: " << std::get<std::string>(data) << "]" << std::endl;
+            std::string d = std::get<std::string>(data);
+
+            if(ao){
+                QByteArray buffer(d.size() , 0);
+                buffer.setRawData(d.c_str() , d.size());
+
+            }
         }
+
+        // if(ao){
+
+        // }
     });
+}
+
+
+void WebRTCClientOferrer::setAudioOut(AudioOut *_ao){
+    ao = _ao;
 }
