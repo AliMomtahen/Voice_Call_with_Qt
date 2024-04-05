@@ -36,11 +36,34 @@
 سپس منتظر پاسخ answerer از سرور میماند تا کانفیگ و sdp و candidate ها را دریافت کند. 
 نهایتا با برقراری ارتباط ، سرور کنار میرود و دو کلاینت با هم ارتباط برقرار میکنند . بخش های مهم این کد عبارتند از : بخش دریافت و اضافه کردن description , candidate ها
 ![desAndcand](https://github.com/AliMomtahen/CN_CA1/assets/102304346/337185c6-261c-443b-99f9-cc04fa3ea016)
+
 بخش مربوط به افزودن callback ها :
 ![callbacks](https://github.com/AliMomtahen/CN_CA1/assets/102304346/820066bd-82d9-493a-9fce-a92ac1bed2b1)
 ![server](https://github.com/AliMomtahen/CN_CA1/assets/102304346/cc5317c5-da85-41ba-8ab3-cff94a91247f)
 ![clientRecieve](https://github.com/AliMomtahen/CN_CA1/assets/102304346/a7bab9d5-7072-40c3-b4a1-47e5e320934a)
+
 نمونه اجرای اتصال دو کلاینت  و ارسال پیام:
 ![test](https://github.com/AliMomtahen/CN_CA1/assets/102304346/7b6afda1-291b-42df-b0a6-cca0787aae87)
 
-بخش دریافت صدا از میکروفون و پخش 
+بخش دریافت صدا از میکروفون و پخش صدا:
+در این بخش بوسیله کتابخانه QAudioSource , QMediaDevices صدا از میکروفون سیستم دریافت میشود و 
+در یک بافر ذخیره میشود و این بافر قرار است ارسال و توسط کلاینت دیگر پخش شود . 
+
+![audio1](https://github.com/AliMomtahen/CN_CA1/assets/102304346/32035d5b-860f-4b9f-91cc-e14bbc9f0867)
+
+
+ذخیره صدا در بافر :
+![audioToBuffer](https://github.com/AliMomtahen/CN_CA1/assets/102304346/174d48a5-1255-46eb-a671-9e7fa2148033)
+
+سپس این بافر ارسال میشود و در مقصد بوسیله توابع کلاس audioOut ، توسط خروجی صدای سیستم اجرا و پخش میشود . 
+
+![speakerhpp](https://github.com/AliMomtahen/CN_CA1/assets/102304346/62e2cc91-b319-48f4-943f-980ffc377753)
+
+تابع play  که بخش اصلی کار را انجام میدهد:
+![playSpeaker](https://github.com/AliMomtahen/CN_CA1/assets/102304346/7059bddb-92e9-4944-b1cf-8ac613a72804)
+
+در بخش ui هم کلید هایی برای رابط کاربری طراحی شده است :
+![ui](https://github.com/AliMomtahen/CN_CA1/assets/102304346/d43f6241-c35b-4fd8-b95a-6916c03a6818)
+
+
+نهایتا با اجرای دو کلاینت و اتصال آن ها و سپس ارسال بافرهای صدای ورودی و اجرا در سمت دیگر ، تماس صوتی برقرار میشود . 
