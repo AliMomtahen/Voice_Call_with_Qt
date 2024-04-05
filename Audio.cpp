@@ -234,7 +234,9 @@ void InputTest::toggleMode()
                 const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
                 //m_audioOutput->play(buffer);
                 if(call_mode == 1 && web1){
-                    web1->sendMessage(buffer.constData());
+                    std::cout << "ya ali"<<std::endl;
+                    std::string g = "hellow";
+                    web1->sendMessage(g.c_str());
                 }
                 //std::cout << "yes " << level << std::endl;
                 m_canvas->setLevel(level);

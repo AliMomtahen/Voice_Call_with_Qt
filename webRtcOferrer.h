@@ -41,7 +41,7 @@ private:
     void executeCommand(int command, bool& exit);
     void parseDescription(std::string descript);
     void parseCandidate(std::string candid);
-
+    void connect_server();
     void printConnectionInfo();
     void setPeerConnectionCallbacks();
     void setDataChannelCallbacks();

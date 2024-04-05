@@ -14,6 +14,12 @@ WebRTCClientAnswerer::WebRTCClientAnswerer() {
 
 void WebRTCClientAnswerer::start() {
     onDataChannel();
+    std::string config = TCPserver.recieveMessage();
+    pc->setRemoteDescription(config);
+    std::cout << "cand size:\n" << cand.size() << std::endl;
+    TCPserver.sendMessage(desc);
+    for (int i = 0 ; i < qMin((int) cand.size() , 1) ; i++)
+        TCPserver.sendMessage(cand[i]);
     //handleCommands();
 }
 
@@ -70,9 +76,10 @@ int WebRTCClientAnswerer::getCommand() {
     pc->setRemoteDescription(config);
     std::cout << "cand size:\n" << cand.size();
     TCPserver.sendMessage(desc);
-    for (int i = 0 ; i < cand.size() ; i++)
+    for (int i = 0 ; i < cand.size() ; i++){
         TCPserver.sendMessage(cand[i]);
-    int command = -1;
+    }
+        int command = -1;
     std::cin >> command;
     std::cin.ignore();
     return command;

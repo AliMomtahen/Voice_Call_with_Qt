@@ -10,7 +10,8 @@ WebRTCClientOferrer::WebRTCClientOferrer() {
 
 void WebRTCClientOferrer::start() {
     initializeDataChannel();
-    handleCommands();
+    connect_server();
+    //handleCommands();
 }
 
 void WebRTCClientOferrer::close() {
@@ -41,13 +42,23 @@ void WebRTCClientOferrer::onDataChannel() {
     });
 }
 
-void WebRTCClientOferrer::handleCommands() {
+
+void WebRTCClientOferrer::connect_server(){
     bool exit = false;
     TCPClient client("127.0.0.1", 12345);
     client.Connect();
     client.SendMessage(desc);
     parseDescription(client.recieveMessage());
     parseCandidate(client.recieveMessage());
+}
+
+void WebRTCClientOferrer::handleCommands() {
+    bool exit = false;
+    // TCPClient client("127.0.0.1", 12345);
+    // client.Connect();
+    // client.SendMessage(desc);
+    // parseDescription(client.recieveMessage());
+    // parseCandidate(client.recieveMessage());
     int command = getCommand();
     while (!exit) {
         printMenu();
